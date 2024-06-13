@@ -1,5 +1,5 @@
 pages << {
-    url: "https://naivas.online/kiambu-road/?automatic_redirect=1",
+    url: "https://naivas.online/",
     page_type: "category",
     http2: true,
     fetch_type: "browser",
