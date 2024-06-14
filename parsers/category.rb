@@ -23,7 +23,7 @@ main_categories.each do |main_cat|
   pages << {
       url: cat_url,
       method: 'GET',
-      fetch_type: 'browser',
+      # fetch_type: 'browser',
       priority: 500,
       page_type: 'listings',
       headers: {
