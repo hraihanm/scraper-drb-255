@@ -43,7 +43,7 @@ if vars['page'] == 1 && count == PRODUCT_PER_PAGE
 
         pages << {
             url: page['url'].gsub(/\?page=\d+/, "?page=#{pn}"),
-            method: 'POST',
+            method: 'GET',
             fetch_type: 'browser',
             page_type: 'listings',
             priority: 500,
