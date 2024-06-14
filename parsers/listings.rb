@@ -1,8 +1,8 @@
 body = Nokogiri::HTML(content)
 vars = page['vars']
-# require 'byebug'; byebug
+require 'byebug'; byebug
 count = 0
-body.css('.product-list .products .product-miniature').each_with_index do |prod, idx|
+body.css('.grid .text-black-50').each_with_index do |prod, idx|
     prod_url = prod.css('a').attr('href').text
     pages << {
         url: prod_url,
@@ -16,16 +16,31 @@ body.css('.product-list .products .product-miniature').each_with_index do |prod,
     }
     count += 1
     save_outputs(outputs) if outputs.count > 99
+
+    # ### #
+    # p count #
+    # sim_vars['prod_url'] = prod_url #
+    # printer(sim_vars) #
+    # ### #
+
 end
 
-# pagination
-PRODUCT_PER_PAGE = 12
+# Pagination
+PRODUCT_PER_PAGE = 15
 
 if vars['page'] == 1 && count == PRODUCT_PER_PAGE
-    total_product = body.at('.total-products').text[/\d+/].to_i
+# if 1 == 1 && count == PRODUCT_PER_PAGE #
+    total_product = body.at('.flex.mb-5').text[/\d+/].to_i
 
-    (2..(total_product/PRODUCT_PER_PAGE)).each do |pn|
-        puts pn
+    # puts total_product #
+    # puts PRODUCT_PER_PAGE #
+    # puts (total_product.fdiv(PRODUCT_PER_PAGE)).ceil() #
+    # p (2..(total_product.fdiv(PRODUCT_PER_PAGE)).ceil()) #
+
+    (2..(total_product.fdiv(PRODUCT_PER_PAGE)).ceil()).each do |pn|
+        # puts pn #
+        # puts "https://naivas.online/spices?page=1".gsub(/\?page=\d+/, "?page=#{pn}") #
+
         pages << {
             url: page['url'].gsub(/\?page=\d+/, "?page=#{pn}"),
             method: 'POST',
@@ -37,7 +52,6 @@ if vars['page'] == 1 && count == PRODUCT_PER_PAGE
                 "page" => pn,
             })
         }
-
     end
-    
+
 end

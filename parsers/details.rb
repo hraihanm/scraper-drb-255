@@ -2,39 +2,51 @@ limbo page['gid'] if content.include? 'This product is no longer available.'
 
 html = Nokogiri::HTML(content)
 vars = page['vars']
-product = html.css('div#mainProduct')
+product = html.css('.w-full.rounded-lg.bg-naivas-gray-light.p-5.py-3')
 
-name = product.css('h1.page-heading').text
+name = product.css('.text-xl').text
 brand = product.css('.product-attributes .product-manufacturer a').text.strip rescue nil
 
 is_private_label = nil
-if brand.include?('NAIVAS')
+if (name =~ /naivas/i).nil?
     is_private_label = false
-elsif brand.empty?
-    is_private_label = nil
+				  
+						  
 else
     is_private_label = true
 end
 
-id = product.css('.product-attributes .product-reference span').text.strip
-ean = product.css('.product-attributes .product-specific-references.ean13 span').text.strip
-img_url = html.css('.img-fluid').attr('src').text
-description = nil
+id = product.css('.col-span-9.text-sm').text.strip
+						
+ean = product.css('.product-attributes .product-specific-references.ean13 span').text.strip rescue nil
+img_url = html.css('.h-full.image-zoom').attr('src').text
+description = html.at_css('#description').text.strip
 
-availability = html.css('span#product-availability').text
+								 
+availability = html.css('span#product-availability').text rescue nil
 if availability == "In Stock"
     is_available = true
 else
     is_available = false
 end
 
-price = html.css('span.current-price').text.gsub(',', '').gsub('KES ', '').to_f
-reg_price = html.css('.product-prices span.regular-price').text
-if reg_price.empty?
+has_promo = html.at_css('.flex.items-center.justify-between.bg-naivas-red.text-white')
+if has_promo.nil?
+    price = html.at_css('.product-price').text.gsub(',', '').gsub('KES ', '').to_f
     reg_price = nil
 else
-    reg_price = reg_price.gsub(',', '').gsub('KES ', '').to_f
+    price = html.at_css('div.border-naivas-red span.font-bold').text.gsub(',', '').gsub('KES ', '').to_f
+    reg_price = html.at_css('div.border-naivas-red span.text-red-600').text.gsub(',', '').gsub('KES ', '').to_f
 end
+
+##
+# if reg_price.empty?
+#     reg_price = nil
+# else
+#     reg_price = reg_price.gsub(',', '').gsub('KES ', '').to_f
+# end
+##
+
 # require 'byebug'; byebug
 if reg_price.nil?
     base_price_lc = price
@@ -116,15 +128,22 @@ product_pieces = $1
 
 product_pieces = 1 if product_pieces.nil?
 
-category = "#{html.css('.breadcrumb .breadcrumb-item .item-name')[1].text.strip}"
+breadcrumb = html.at_css('div.pt-5.hidden.md\\:block')
 
-sub_category = "#{html.css('.breadcrumb .breadcrumb-item .item-name')[2..-2].map{|a| a.text.strip}.join(' > ')}"
+breadcrumb = html.at_css('div.pt-5.hidden.md\\:block')
 
+category = "#{breadcrumb.at_css('a:nth-child(3)')&.text&.strip}"
 
+sub_category = "#{breadcrumb.at_css('a:nth-child(5)')&.text&.strip}"
+
+sub_sub_category = "#{breadcrumb.at_css('a:nth-child(7)')&.text&.strip}"
+
+# Unavailable - Skip
 category_id = nil
 # raise "category_id not found" if category_id.nil? || category_id.empty?
 
 # require 'byebug';byebug
+
 out = {
     '_collection' => 'products',
     '_id' => "#{id.to_s}",
@@ -142,6 +161,7 @@ out = {
     'category_id' => category_id,
     'category' => category,
     'sub_category' => sub_category,
+    'sub_sub_category' => sub_sub_category,
     'customer_price_lc' => customer_price_lc,
     'base_price_lc' => base_price_lc,
     'has_discount' => has_discount,
@@ -173,3 +193,15 @@ out = {
 }
 outputs << out
 save_outputs outputs if outputs.length > 99
+
+   
+					   
+				   
+							 
+											   
+									 
+							   
+									   
+											   
+				 
+   
