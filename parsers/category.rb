@@ -73,8 +73,8 @@ subcategories.each do |subcat|
 
   pages << {
       url: cat_url,
-      method: 'POST',
-      fetch_type: 'browser',
+      method: 'GET',
+      # fetch_type: 'browser',
       priority: 500,
       page_type: 'listings',
       headers: {
@@ -124,8 +124,8 @@ categories.each do |cat|
 
     pages << {
         url: cat_url,
-        method: 'POST',
-        fetch_type: 'browser',
+        method: 'GET',
+        # fetch_type: 'browser',
         priority: 500,
         page_type: 'listings',
         headers: {
