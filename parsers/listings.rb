@@ -28,7 +28,7 @@ body.css('.grid .text-black-50').each_with_index do |prod, idx|
         url: prod_url,
         method: "GET",
         page_type: 'details',
-        # fetch_type: 'browser',
+        fetch_type: 'browser',
         headers: headers,
         vars: {
             rank: idx+1
@@ -72,7 +72,7 @@ if vars['page'] == 1 && total_product > PRODUCT_PER_PAGE
         pages << {
             url: next_url,
             method: 'GET',
-            # fetch_type: 'browser',
+            fetch_type: 'browser',
             page_type: 'listings',
             priority: 500,
             headers: headers,

@@ -2,7 +2,7 @@ pages << {
     url: "https://naivas.online/?automatic_redirect=1",
     page_type: "category",
     http2: true,
-    # fetch_type: "browser",
+    fetch_type: "browser",
     method: "GET",
     # driver:{
     #     "name": "#{rand}",
