@@ -53,70 +53,71 @@ main_categories.each do |main_cat|
   }   
 end
 
-# 2nd Level
-# puts "### 2ND LEVEL"
-subcategories = html.css('div#mega-menu-full-dropdown-categories ul.masonry > li > a')
-subcategories.each do |subcat|
-  # require 'byebug'; byebug
-  cat_name = subcat.text.strip
-  cat_url = subcat['href']
-  cat_url = "https://naivas.online" + cat_url + "?page=1"
+# Disabled Subcategory parsing
+# # 2nd Level
+# # puts "### 2ND LEVEL"
+# subcategories = html.css('div#mega-menu-full-dropdown-categories ul.masonry > li > a')
+# subcategories.each do |subcat|
+#   # require 'byebug'; byebug
+#   cat_name = subcat.text.strip
+#   cat_url = subcat['href']
+#   cat_url = "https://naivas.online" + cat_url + "?page=1"
 
-  # ####
-  # p
-  # puts '#######'
-  # p i
-  # i+=1
+#   # ####
+#   # p
+#   # puts '#######'
+#   # p i
+#   # i+=1
 
-  # sim_vars['cat_name'] = cat_name
-  # sim_vars['cat_url'] = cat_url
-  # printer(sim_vars)
-  # ####
+#   # sim_vars['cat_name'] = cat_name
+#   # sim_vars['cat_url'] = cat_url
+#   # printer(sim_vars)
+#   # ####
 
-  pages << {
-      url: cat_url,
-      method: 'GET',
-      # fetch_type: 'browser',
-      priority: 500,
-      page_type: 'listings',
-      headers: headers,
-      vars: {
-          category_name: cat_name,
-          page: 1
-      }
-  }   
-end
+#   pages << {
+#       url: cat_url,
+#       method: 'GET',
+#       # fetch_type: 'browser',
+#       priority: 500,
+#       page_type: 'listings',
+#       headers: headers,
+#       vars: {
+#           category_name: cat_name,
+#           page: 1
+#       }
+#   }   
+# end
 
-# 3rd Level
-# puts "### 3RD LEVEL"
-categories = html.css('div#mega-menu-full-dropdown-categories a.text-gray-500')
-categories.each do |cat|
-    # require 'byebug'; byebug
-    cat_name = cat.text.strip
-    cat_url = cat['href']
-    cat_url = "https://naivas.online" + cat_url + "?page=1"
+# # 3rd Level
+# # puts "### 3RD LEVEL"
+# categories = html.css('div#mega-menu-full-dropdown-categories a.text-gray-500')
+# categories.each do |cat|
+#     # require 'byebug'; byebug
+#     cat_name = cat.text.strip
+#     cat_url = cat['href']
+#     cat_url = "https://naivas.online" + cat_url + "?page=1"
 
-    # ####
-    # p
-    # puts '#######'
-    # p i
-    # i+=1
+#     # ####
+#     # p
+#     # puts '#######'
+#     # p i
+#     # i+=1
 
-    # sim_vars['cat_name'] = cat_name
-    # sim_vars['cat_url'] = cat_url
-    # printer(sim_vars)
-    # ####
+#     # sim_vars['cat_name'] = cat_name
+#     # sim_vars['cat_url'] = cat_url
+#     # printer(sim_vars)
+#     # ####
 
-    pages << {
-        url: cat_url,
-        method: 'GET',
-        fetch_type: 'browser',
-        priority: 500,
-        page_type: 'listings',
-        headers: headers,
-        vars: {
-            category_name: cat_name,
-            page: 1
-        }
-    }   
-end
+#     pages << {
+#         url: cat_url,
+#         method: 'GET',
+#         fetch_type: 'browser',
+#         priority: 500,
+#         page_type: 'listings',
+#         headers: headers,
+#         vars: {
+#             category_name: cat_name,
+#             page: 1
+#         }
+#     }   
+# end
